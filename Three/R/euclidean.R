@@ -8,6 +8,11 @@
 #' @references See [Wikipedia](https://en.wikipedia.org/wiki/Euclidean_distance).
 #' @examples
 #' euclidean(1, 2)  # Calculate the distance between points (1, 2) and (0, 0)
+#' @export
+euclidean <- function(a, b) {
+  # Euclidean algorithm implementation
+}
+
 
 euclidean <- function(a, b){
   if(a < b){
