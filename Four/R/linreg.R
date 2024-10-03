@@ -242,5 +242,3 @@ summary.linreg <- function(x,...) {
               sqrt(x$residual_variance), x$degrees_of_freedom))
 }
 
-
-
