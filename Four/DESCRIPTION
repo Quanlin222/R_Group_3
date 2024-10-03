@@ -4,19 +4,20 @@ Type: Package
 Title: Linear Regression Function
 Version: 1.0
 Date: 2024-09-30
-Author: Quanlin Ren <renqu711@student.liu.se>, Qinxia Zhang <qinzh916@student.liu.se>
+Author: Quanlin Ren, Qinxia Zhang
 Maintainer: Quanlin Ren <renqu711@student.liu.se>
 Description: This function performs multiple linear regression using ordinary least squares and returns an object of class 'linreg' containing various statistics.
 License: GPL-3
 RoxygenNote: 7.3.2
 Imports:
     ggplot2,
-    stats
+    stats,
+    gridExtra
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
-Config/testthat/edition: 3
 VignetteBuilder: knitr
-
-
+Config/testthat/edition: 3
 
 

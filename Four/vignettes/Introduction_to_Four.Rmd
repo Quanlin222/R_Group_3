@@ -22,7 +22,7 @@ First, make sure you have the package installed and loaded:
 
 ```r
 # Uncomment the line below to install the package if you haven't done so
-# devtools::install_github("your-username/Four")
+# devtools::install_github("Quanlin222/R_Group_3/Four")
 library(Four)
 
 knitr::opts_chunk$set(

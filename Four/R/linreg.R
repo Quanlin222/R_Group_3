@@ -16,7 +16,7 @@
 #'   \item{p_values}{p-values for each coefficient.}
 #' @export
 linreg <- function(formula, data) {
-
+  
   if(!is.data.frame(data)){
     stop()
   }
@@ -75,6 +75,7 @@ linreg <- function(formula, data) {
     variance_coefficients = var_beta,
     t_values = t_values,
     p_values = p_values,
+    actual_values = y,
     call = match.call()
   )
   # Set the class of the result to 'linreg'
@@ -108,6 +109,9 @@ print.linreg <- function(x, ...) {
   }
 }
 
+plot <- function(x,...) {
+  UseMethod("plot")
+}
 #' Plot method for linreg objects
 #'
 #' This method plots the diagnostic plots for linreg objects.
@@ -120,15 +124,20 @@ plot.linreg <- function(x, ...) {
   y_hat <- x$fitted_values
   e_hat <- x$residuals
   
+  
   # Create a data frame for plotting
   plot_data <- data.frame(Fitted = y_hat, Residuals = e_hat)
+  
+  # Calculate the median of residuals
+  median_residuals <- median(e_hat)
   
   # Residuals vs Fitted
   p1 <- ggplot(plot_data, aes(x = Fitted, y = Residuals)) +
     geom_point() +
-    geom_smooth(method = "loess", se = FALSE, color = "red") +
+    geom_hline(yintercept = median_residuals, linetype = "dashed", color = "blue") +
+    geom_line(color = "red", linewidth = 0.5) +
     labs(title = "Residuals vs Fitted", x = "Fitted values", y = "Residuals") +
-    theme_minimal()
+    theme_bw()
   
   # Scale-Location plot (sqrt of standardized residuals)
   standardized_residuals <- e_hat / sd(e_hat)
@@ -136,13 +145,12 @@ plot.linreg <- function(x, ...) {
   
   p2 <- ggplot(plot_data, aes(x = Fitted, y = Std_Residuals)) +
     geom_point() +
-    geom_smooth(method = "loess", se = FALSE, color = "red") +
+    geom_line(color = "red", linewidth = 0.5)  +
     labs(title = "Scale-Location", x = "Fitted values", y = expression(sqrt(abs(Standardized~Residuals)))) +
-    theme_minimal()
+    theme_bw()
   
   # Combine plots
-  #library(gridExtra)
-  #grid.arrange(p1, p2, ncol = 1)
+  gridExtra::grid.arrange(p1, p2, ncol = 1)
 }
 
 
@@ -233,7 +241,6 @@ summary.linreg <- function(x,...) {
   cat(sprintf("\nResidual standard error: %.5f on %d degrees of freedom\n", 
               sqrt(x$residual_variance), x$degrees_of_freedom))
 }
-
 
 
 
